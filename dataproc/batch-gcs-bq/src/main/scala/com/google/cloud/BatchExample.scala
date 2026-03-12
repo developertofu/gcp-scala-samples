@@ -45,6 +45,8 @@ object BatchExample extends SparkSessionWrapper {
     val inputDf = readStorage.read(args.inputPath)
     // Transform
     val outputDf = Transform.transform(inputDf)
+    // Transofrm it again
+    val outputDf2 = Transform.transform(outputDf)
     // Load / Write
     args.writeMode match {
       case "direct"  => writeBigQuery.writeDirect(outputDf, args.outputTable)
