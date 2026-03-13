@@ -44,7 +44,7 @@ object BatchExample extends SparkSessionWrapper {
     // Extract / Read
     val inputDf = readStorage.read(args.inputPath)
     // Transform
-    val outputDf = Transform.transform(inputDf)
+    // val outputDf = Transform.transform(inputDf)
     // Transofrm it again
     val outputDf2 = Transform.transform(outputDf)
     // Load / Write
