@@ -19,9 +19,9 @@ import com.google.cloud.util.Parser.{MainArguments, mainParser}
 import com.google.cloud.read.ReadStorage
 import com.google.cloud.transform.Transform
 import com.google.cloud.write.WriteBigQuery
-//import java.util.ArrayList
+import java.util.ArrayList
 
-/* class UserRegistry {
+class UserRegistry {
   // Java-ism: Using 'var' and a mutable Java collection
   var users: java.util.List[String] = new java.util.ArrayList[String]()
 
@@ -44,7 +44,7 @@ import com.google.cloud.write.WriteBigQuery
       .map(name => name.trim.toUpperCase)   // Transforms everything first
       .filter(name => name.startsWith("ADM")) // Then filters
       .map(name => name + "_" + suffix)      // Then transforms again
-    
+
     result
   }
 
@@ -54,16 +54,14 @@ import com.google.cloud.write.WriteBigQuery
       users.add(name)
     }
   }
-  
+
   def findUser(name: String): String = {
     for (i <- 0 until users.size()) {
       if (users.get(i).equals(name)) return users.get(i)
     }
     null 
   }
-}
- */
- 
+} 
 object BatchExample extends SparkSessionWrapper {
 
   val appName = "BatchExample"
