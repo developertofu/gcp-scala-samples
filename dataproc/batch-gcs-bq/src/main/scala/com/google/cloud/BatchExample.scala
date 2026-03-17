@@ -19,9 +19,9 @@ import com.google.cloud.util.Parser.{MainArguments, mainParser}
 import com.google.cloud.read.ReadStorage
 import com.google.cloud.transform.Transform
 import com.google.cloud.write.WriteBigQuery
-import java.util.ArrayList
+//import java.util.ArrayList
 
-class UserRegistry {
+/* class UserRegistry {
   // Java-ism: Using 'var' and a mutable Java collection
   var users: java.util.List[String] = new java.util.ArrayList[String]()
 
@@ -62,7 +62,8 @@ class UserRegistry {
     null 
   }
 }
-
+ */
+ 
 object BatchExample extends SparkSessionWrapper {
 
   val appName = "BatchExample"
