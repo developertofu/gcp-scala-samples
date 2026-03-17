@@ -19,7 +19,49 @@ import com.google.cloud.util.Parser.{MainArguments, mainParser}
 import com.google.cloud.read.ReadStorage
 import com.google.cloud.transform.Transform
 import com.google.cloud.write.WriteBigQuery
+import java.util.ArrayList
 
+class UserRegistry {
+  // Java-ism: Using 'var' and a mutable Java collection
+  var users: java.util.List[String] = new java.util.ArrayList[String]()
+
+  // Java-ism: Returning 'null' instead of Option
+  // Java-ism: Using 'return' keyword explicitly
+  def findUser(name: String): String = {
+    for (i <- 0 until users.size()) {
+      if (users.get(i).equals(name)) {
+        return users.get(i)
+      }
+    }
+    return null 
+  }
+
+  // --- NEW: Example of Collection Misuse ---
+  def getActiveAdminNames(suffix: String): List[String] = {
+    // 1. Inefficient Chain: Each method creates a new intermediate collection.
+    // 2. Map before Filter: Processing data that will just be thrown away.
+    val result = users.toArray.toList
+      .map(name => name.trim.toUpperCase)   // Transforms everything first
+      .filter(name => name.startsWith("ADM")) // Then filters
+      .map(name => name + "_" + suffix)      // Then transforms again
+
+    result
+  }
+
+  // Java-ism: Side-effecting procedure with no return type specified
+  def addUser(name: String) {
+    if (name != null) {
+      users.add(name)
+    }
+  }
+
+  def findUser(name: String): String = {
+    for (i <- 0 until users.size()) {
+      if (users.get(i).equals(name)) return users.get(i)
+    }
+    null 
+  }
+} 
 object BatchExample extends SparkSessionWrapper {
 
   val appName = "BatchExample"
@@ -44,9 +86,7 @@ object BatchExample extends SparkSessionWrapper {
     // Extract / Read
     val inputDf = readStorage.read(args.inputPath)
     // Transform
-    val outputDf = Transform.transform(inputDf)
-    // Transofrm it again
-    val outputDf2 = Transform.transform(outputDf)
+     val outputDf = Transform.transform(inputDf)
     // Load / Write
     args.writeMode match {
       case "direct"  => writeBigQuery.writeDirect(outputDf, args.outputTable)
